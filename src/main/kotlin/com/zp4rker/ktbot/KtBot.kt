@@ -27,14 +27,12 @@ object Test : Command(aliases = arrayOf("test")) {
     }
 }
 
-fun MessageChannel.sendRawString(message: String): MessageAction {
-    var content = EmojiUtils.emojify(message)
+fun MessageChannel.sendRawString(string: String): MessageAction {
+    var content = string
     val regex = Regex(":[^:]*:")
-    regex.findAll(content).forEach {
+    regex.findAll(string).forEach {
         val name = it.value.replace(":", "")
-        jda.getEmotesByName(name, false)[0]?.let { emote ->
-            content = content.replace(it.value, emote.asMention)
-        }
+        jda.getEmotesByName(name, false).first()?.let { e -> content = content.replace(it.value, e.asMention) }
     }
     return this.sendMessage(content)
 }
