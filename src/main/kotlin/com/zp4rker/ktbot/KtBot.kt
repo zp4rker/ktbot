@@ -2,8 +2,10 @@ package com.zp4rker.ktbot
 
 import com.zp4rker.core.discord.command.Command
 import com.zp4rker.core.discord.command.CommandHandler
+import com.zp4rker.core.discord.util.sendRawString
 import emoji4j.EmojiUtils
 import net.dv8tion.jda.api.AccountType
+import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Message
@@ -23,16 +25,6 @@ fun main() {
 
 object Test : Command(aliases = arrayOf("test")) {
     override fun handle(message: Message, channel: TextChannel, guild: Guild, args: List<String>) {
-        channel.sendRawString(":unocard:").queue()
+        EmbedBuilder().setImage("https://mcapi.us/server/image?ip=play.hivemc.com").build().also { channel.sendMessage(it).queue() }
     }
-}
-
-fun MessageChannel.sendRawString(string: String): MessageAction {
-    var content = string
-    val regex = Regex(":[^:]*:")
-    regex.findAll(string).forEach {
-        val name = it.value.replace(":", "")
-        jda.getEmotesByName(name, false).first()?.let { e -> content = content.replace(it.value, e.asMention) }
-    }
-    return this.sendMessage(content)
 }
