@@ -1,0 +1,7 @@
+{
+  "name": "ktbot",
+  "version": "${project.version}",
+  "main": "com.zp4rker.ktbot.KtBot",
+  "jda-version": "4.1.1_115",
+  "author": "zp4rker"
+}
